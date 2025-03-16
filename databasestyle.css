@@ -1,0 +1,89 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  margin-bottom: 20px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  word-wrap: break-word;
+}
+th {
+  background-color: #f2f2f2;
+  cursor: pointer;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+th.sort-asc::after {
+  content: " ▲";
+}
+th.sort-desc::after {
+  content: " ▼";
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+.more-content {
+  display: none;
+}
+.more-button {
+  color: blue;
+  cursor: pointer;
+  text-decoration: underline;
+  user-select: none;
+}
+.more-button::selection {
+  background: none;
+}
+.show-all-button {
+  margin-left: 10px;
+  padding: 5px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  position: sticky;
+  top: 10px;
+  z-index: 0; /* Adjusted z-index to ensure it does not overlap with table headings */
+}
+.show-all-button:hover {
+  background-color: #0056b3;
+}
+.hide-all-button {
+  margin-left: 10px;
+  padding: 5px 20px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: middle;
+  position: sticky;
+  top: 10px;
+  z-index: 3; /* Adjusted z-index to ensure it does not overlap with table headings */
+}
+.hide-all-button:hover {
+  background-color: #c82333;
+}
+.copy-text {
+  color: rgb(17, 0, 255);
+  cursor: pointer;
+  margin-left: 10px;
+  user-select: none; /* Make it unselectable */
+}
+.copy-text:hover {
+  text-decoration: underline;
+}
+.copy-text:active {
+  color: rgb(255, 51, 0);
+}
