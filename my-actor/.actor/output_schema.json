@@ -1,0 +1,475 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contact Details Scraper Output",
+  "description": "Comprehensive contact information extracted from websites",
+  "type": "object",
+  "properties": {
+    "facebookProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "startUrl": {
+            "type": "string"
+          },
+          "profileName": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "followersCount": {
+            "type": "number"
+          },
+          "externalProfileURL": {
+            "type": "string"
+          },
+          "profileURL": {
+            "type": "string"
+          },
+          "creationDate": {
+            "type": "string"
+          },
+          "coverPhoto": {
+            "type": "string"
+          },
+          "accountVerificationStatus": {
+            "type": "boolean"
+          },
+          "socialInputUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "instagramProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "startUrl": {
+            "type": "string"
+          },
+          "profileName": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "followersCount": {
+            "type": "number"
+          },
+          "followingCount": {
+            "type": "number"
+          },
+          "postsCount": {
+            "type": "number"
+          },
+          "accountVerificationStatus": {
+            "type": "boolean"
+          },
+          "privateProfile": {
+            "type": "boolean"
+          },
+          "socialInputUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "youtubeProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "startUrl": {
+            "type": "string"
+          },
+          "profileName": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "followersCount": {
+            "type": "number"
+          },
+          "channelTotalVideos": {
+            "type": "number"
+          },
+          "channelTotalViews": {
+            "type": "number"
+          },
+          "accountVerificationStatus": {
+            "type": "boolean"
+          },
+          "profileURL": {
+            "type": "string"
+          },
+          "socialInputUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tiktokProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "startUrl": {
+            "type": "string"
+          },
+          "profileName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "profilePictureURL": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "followersCount": {
+            "type": "number"
+          },
+          "videosCount": {
+            "type": "number"
+          },
+          "accountVerificationStatus": {
+            "type": "boolean"
+          },
+          "privateProfile": {
+            "type": "boolean"
+          },
+          "socialInputUrl": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "twitterProfiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "startUrl": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "startUrl"
+        ]
+      }
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "All email addresses found"
+    },
+    "phones": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Verified phone numbers"
+    },
+    "phonesUncertain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Uncertain phone number matches"
+    },
+    "linkedIns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "LinkedIn profile URLs"
+    },
+    "twitters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Twitter/X profile URLs"
+    },
+    "instagrams": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Instagram profile URLs"
+    },
+    "facebooks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Facebook profile URLs"
+    },
+    "youtubes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "YouTube channel URLs"
+    },
+    "tiktoks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "TikTok profile URLs"
+    },
+    "pinterests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Pinterest profile URLs"
+    },
+    "discords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Discord server/profile URLs"
+    },
+    "snapchats": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Snapchat profile URLs"
+    },
+    "threads": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Threads profile URLs"
+    },
+    "telegrams": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Telegram profile/group URLs"
+    },
+    "reddits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Reddit profile/community URLs"
+    },
+    "whatsapps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "WhatsApp contact information"
+    },
+    "depth": {
+      "type": "number",
+      "description": "Link depth of the page from the start URL"
+    },
+    "originalStartUrl": {
+      "type": "string",
+      "description": "The original start URL this contact came from"
+    },
+    "domain": {
+      "type": "string",
+      "description": "The domain extracted from the URL"
+    },
+    "scrapedUrls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "All URLs scraped for this domain"
+    },
+    "leadsEnrichment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "personId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": ["string", "null"]
+          },
+          "lastName": {
+            "type": ["string", "null"]
+          },
+          "fullName": {
+            "type": ["string", "null"]
+          },
+          "linkedinProfile": {
+            "type": ["string", "null"]
+          },
+          "email": {
+            "type": ["string", "null"]
+          },
+          "mobileNumber": {
+            "type": ["string", "null"]
+          },
+          "jobTitle": {
+            "type": ["string", "null"]
+          },
+          "industry": {
+            "type": ["string", "null"]
+          },
+          "city": {
+            "type": ["string", "null"]
+          },
+          "state": {
+            "type": ["string", "null"]
+          },
+          "country": {
+            "type": ["string", "null"]
+          },
+          "companyId": {
+            "type": ["string", "null"]
+          },
+          "companyName": {
+            "type": ["string", "null"]
+          },
+          "companyWebsite": {
+            "type": ["string", "null"]
+          },
+          "companySize": {
+            "type": ["string", "null"]
+          },
+          "companyLinkedin": {
+            "type": ["string", "null"]
+          },
+          "companyCity": {
+            "type": ["string", "null"]
+          },
+          "companyState": {
+            "type": ["string", "null"]
+          },
+          "companyCountry": {
+            "type": ["string", "null"]
+          },
+          "companyPhoneNumber": {
+            "type": ["string", "null"]
+          },
+          "headline": {
+            "type": ["string", "null"]
+          },
+          "departments": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "c_suite",
+                "product",
+                "engineering_technical",
+                "design",
+                "education",
+                "finance",
+                "human_resources",
+                "information_technology",
+                "legal",
+                "marketing",
+                "medical_health",
+                "operations",
+                "sales",
+                "consulting"
+              ]
+            }
+          },
+          "seniority": {
+            "type": ["string", "null"]
+          },
+          "photoUrl": {
+            "type": ["string", "null"]
+          },
+          "twitter": {
+            "type": ["string", "null"]
+          },
+          "emailVerification": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "result": {
+                "type": "string",
+                "enum": ["ok", "catch_all", "unknown", "error", "disposable", "invalid"]
+              },
+              "quality": {
+                "type": "string",
+                "enum": ["", "good", "bad", "risky"]
+              },
+              "subResult": {
+                "type": "string"
+              },
+              "free": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "boolean"
+              },
+              "error": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "description": "Business leads enrichment data"
+    },
+    "chargeableEmailVerificationsCount": {
+      "type": "number",
+      "description": "Number of billable email verifications performed"
+    },
+    "referrerUrl": {
+      "type": ["string", "null"],
+      "description": "The URL that referred to this page"
+    },
+    "url": {
+      "type": "string",
+      "description": "The URL of the page where contacts were found"
+    }
+  },
+  "required": [
+    "depth",
+    "discords",
+    "domain",
+    "emails",
+    "facebooks",
+    "instagrams",
+    "linkedIns",
+    "originalStartUrl",
+    "phones",
+    "phonesUncertain",
+    "pinterests",
+    "reddits",
+    "snapchats",
+    "telegrams",
+    "threads",
+    "tiktoks",
+    "twitters",
+    "whatsapps",
+    "youtubes"
+  ]
+}

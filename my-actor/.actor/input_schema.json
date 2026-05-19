@@ -1,0 +1,177 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "Contact Details Scraper Input",
+  "description": "Crawls websites and extracts comprehensive contact information including emails, phones, LinkedIn profiles, social media, and business leads.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrls": {
+      "title": "Start URLs",
+      "type": "array",
+      "description": "The list of web pages from which the scraper will start crawling.",
+      "prefill": [
+        {
+          "url": "https://apify.com"
+        }
+      ],
+      "editor": "requestListSources"
+    },
+    "maxRequestsPerStartUrl": {
+      "title": "Maximum pages per start URL",
+      "type": "integer",
+      "description": "The maximum number of pages that will be enqueued from each start URL you provide.",
+      "default": 20,
+      "minimum": 1
+    },
+    "mergeContacts": {
+      "title": "Merge contacts",
+      "type": "boolean",
+      "description": "Enable this option to merge all contacts and social media from every page of the same start URL into a single, clean result row.",
+      "default": true
+    },
+    "maxDepth": {
+      "title": "Maximum link depth",
+      "type": "integer",
+      "description": "The maximum number of links away from the Start URLs that the actor will crawl. If 0, the scraper will not follow any links. If empty or null, the scraper will follow links to an arbitrary depth.",
+      "minimum": 0
+    },
+    "maxRequests": {
+      "title": "Maximum pages for whole scrape",
+      "type": "integer",
+      "description": "The maximum number of pages the scraper will load. It is always a good idea to limit the number of pages, otherwise the scraper might run infinitely or consume too many resources.",
+      "minimum": 1
+    },
+    "sameDomain": {
+      "title": "Stay within domain",
+      "type": "boolean",
+      "description": "If set, the scraper will only follow links within the same domain as the referring page.",
+      "default": true
+    },
+    "considerChildFrames": {
+      "title": "Probe frames",
+      "type": "boolean",
+      "description": "If set, the scraper will also extract contact information from iframes. You might not always want this (e.g. it will include data from online ads).",
+      "default": true
+    },
+    "maximumLeadsEnrichmentRecords": {
+      "title": "Maximum leads per domain",
+      "type": "integer",
+      "description": "The maximum number of leads records you want to scrape per each domain found. Set to 0 to disable leads enrichment.",
+      "default": 0,
+      "minimum": 0
+    },
+    "leadsEnrichmentDepartments": {
+      "title": "Leads departments selection",
+      "type": "array",
+      "description": "Filter leads by specific departments (sales, marketing, engineering, etc.).",
+      "items": {
+        "type": "string",
+        "enum": [
+          "c_suite",
+          "product",
+          "engineering_technical",
+          "design",
+          "education",
+          "finance",
+          "human_resources",
+          "information_technology",
+          "legal",
+          "marketing",
+          "medical_health",
+          "operations",
+          "sales",
+          "consulting"
+        ]
+      }
+    },
+    "verifyLeadsEnrichmentEmails": {
+      "title": "Email verification",
+      "type": "boolean",
+      "description": "When enabled, verifies the email address of each lead extracted during business leads enrichment.",
+      "default": false
+    },
+    "scrapeSocialMediaProfiles": {
+      "title": "Social media profile enrichment",
+      "type": "object",
+      "description": "Enable enrichment for any social media profiles found. Retrieves profile names, follower counts, descriptions, and verification status.",
+      "properties": {
+        "facebooks": {
+          "type": "boolean",
+          "title": "Enable Facebook profile scraping",
+          "default": false
+        },
+        "instagrams": {
+          "type": "boolean",
+          "title": "Enable Instagram profile scraping",
+          "default": false
+        },
+        "youtubes": {
+          "type": "boolean",
+          "title": "Enable YouTube channel scraping",
+          "default": false
+        },
+        "tiktoks": {
+          "type": "boolean",
+          "title": "Enable TikTok profile scraping",
+          "default": false
+        },
+        "twitters": {
+          "type": "boolean",
+          "title": "Enable X (Twitter) profile scraping",
+          "default": false
+        }
+      },
+      "default": {
+        "facebooks": false,
+        "instagrams": false,
+        "youtubes": false,
+        "tiktoks": false,
+        "twitters": false
+      }
+    },
+    "useBrowser": {
+      "title": "Use Browser for scraping",
+      "type": "boolean",
+      "description": "If set, the scraper will use a browser for crawling the pages.",
+      "default": false
+    },
+    "waitUntil": {
+      "title": "Consider page to be loaded",
+      "type": "string",
+      "description": "Select when a page should be considered loaded so that the actor can start scraping it. Only works with the browser.",
+      "enum": [
+        "commit",
+        "domcontentloaded",
+        "load",
+        "networkidle"
+      ],
+      "default": "domcontentloaded"
+    },
+    "max_concurrency": {
+      "title": "Max concurrent pages",
+      "type": "integer",
+      "description": "How many browser tabs to run in parallel. Higher = faster but more memory. Recommended: 3–10.",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 20
+    },
+    "navigation_timeout_secs": {
+      "title": "Navigation timeout (seconds)",
+      "type": "integer",
+      "description": "Maximum time in seconds to wait for a page to load. Increase for very slow sites.",
+      "default": 60,
+      "minimum": 10,
+      "maximum": 300
+    },
+    "proxy_configuration": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Apify proxy settings. Use datacenter or residential proxies to avoid blocks on protected sites.",
+      "editor": "proxy",
+      "prefill": {
+        "useApifyProxy": false
+      }
+    }
+  },
+  "required": ["startUrls"]
+}
