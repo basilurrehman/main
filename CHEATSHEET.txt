@@ -1,0 +1,249 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   STANDALONE FLARESOLVERR - CHEAT SHEET                     ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌─ INSTALLATION ─────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  1. Install Python dependencies:                                           │
+│     $ pip install -r requirements_standalone.txt                           │
+│                                                                              │
+│  2. Install Chrome/Chromium:                                               │
+│     - Ubuntu/Debian: sudo apt-get install chromium-browser                 │
+│     - macOS: brew install chromium                                         │
+│     - Windows: Download from https://www.google.com/chrome/                │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ QUICK START ──────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  Create urls.txt:                                                          │
+│  ┌────────────────────┐                                                    │
+│  │ https://site1.com  │                                                    │
+│  │ https://site2.com  │                                                    │
+│  │ https://site3.com  │                                                    │
+│  └────────────────────┘                                                    │
+│                                                                              │
+│  Then run:                                                                  │
+│  $ python3 flaresolverr_standalone.py                                      │
+│                                                                              │
+│  Results will be in: results.json                                           │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ CODE EXAMPLES ────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  📌 SINGLE URL                                                              │
+│  ──────────────────────────────────────────────────────────────────────    │
+│  from flaresolverr_standalone import StandaloneFlare                       │
+│                                                                              │
+│  flare = StandaloneFlare(headless=True)                                    │
+│  result = flare.fetch_url('https://example.com')                           │
+│                                                                              │
+│  print(result['html'])        # Get page HTML                              │
+│  print(result['cookies'])     # Get cookies                                │
+│  print(result['status'])      # Get HTTP status                            │
+│  print(result['error'])       # Check for errors                           │
+│                                                                              │
+│  flare.close()                                                              │
+│                                                                              │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  📌 FROM FILE                                                               │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  from flaresolverr_standalone import StandaloneFlare                       │
+│                                                                              │
+│  flare = StandaloneFlare(headless=True, disable_media=True)                │
+│  results = flare.fetch_from_file('urls.txt')                               │
+│  flare.save_results('results.json')                                        │
+│                                                                              │
+│  for result in results:                                                    │
+│      print(f"{result['url']}: {result['status']}")                         │
+│                                                                              │
+│  flare.close()                                                              │
+│                                                                              │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  📌 PARSE HTML                                                              │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  from flaresolverr_standalone import StandaloneFlare                       │
+│  from bs4 import BeautifulSoup                                             │
+│                                                                              │
+│  flare = StandaloneFlare()                                                 │
+│  result = flare.fetch_url('https://example.com')                           │
+│                                                                              │
+│  soup = BeautifulSoup(result['html'], 'html.parser')                       │
+│  title = soup.title.string                                                 │
+│  links = [a.get('href') for a in soup.find_all('a')]                      │
+│                                                                              │
+│  flare.close()                                                              │
+│                                                                              │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  📌 ERROR HANDLING                                                          │
+│  ─────────────────────────────────────────────────────────────────────    │
+│  result = flare.fetch_url('https://example.com')                           │
+│                                                                              │
+│  if result['error'] is None:                                               │
+│      print(f"Success! Got {len(result['html'])} bytes")                    │
+│  else:                                                                      │
+│      print(f"Failed: {result['error']}")                                   │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PARAMETERS ───────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  StandaloneFlare(                                                           │
+│      headless=True,        # Hide browser (faster)                          │
+│      disable_media=False,  # Block images/CSS                              │
+│      timeout=60            # Seconds per URL                               │
+│  )                                                                           │
+│                                                                              │
+│  Examples:                                                                   │
+│  ──────────                                                                  │
+│  # Fast & hidden (web scraping)                                            │
+│  flare = StandaloneFlare(headless=True, disable_media=True)                │
+│                                                                              │
+│  # Visible & detailed (debugging)                                          │
+│  flare = StandaloneFlare(headless=False, disable_media=False)              │
+│                                                                              │
+│  # Long timeout for slow sites                                             │
+│  flare = StandaloneFlare(timeout=180)  # 3 minutes                         │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ RESULT STRUCTURE ─────────────────────────────────────────────────────────┐
+│                                                                              │
+│  result = {                                                                 │
+│      'url': 'https://example.com',         # The URL                       │
+│      'status': 200,                        # HTTP status code              │
+│      'html': '<html>...</html>',           # Full page HTML                │
+│      'cookies': [                          # List of cookies               │
+│          {                                                                  │
+│              'name': 'sessionid',                                           │
+│              'value': 'abc123',                                             │
+│              'domain': '.example.com',                                      │
+│              'path': '/',                                                   │
+│              'expires': 1735689600,                                         │
+│              'httpOnly': True,                                              │
+│              'secure': True,                                                │
+│              'sameSite': 'Lax'                                              │
+│          }                                                                  │
+│      ],                                                                     │
+│      'user_agent': 'Mozilla/5.0...',      # Browser user agent             │
+│      'error': None,                        # None = success, else message   │
+│      'timestamp': 1672531200.123           # When fetched                  │
+│  }                                                                           │
+│                                                                              │
+│  Access examples:                                                           │
+│  ────────────────                                                           │
+│  result['html']           → Full HTML content                              │
+│  result['status']         → HTTP status (200, 404, etc)                    │
+│  result['cookies']        → List of cookie dicts                           │
+│  result['error']          → None or error message                          │
+│  result['user_agent']     → Browser user agent                             │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ FILES PROVIDED ───────────────────────────────────────────────────────────┐
+│                                                                              │
+│  📄 flaresolverr_standalone.py     Main script (use this!)                  │
+│  📄 requirements_standalone.txt    Dependencies                             │
+│  📄 STANDALONE_README.md           Complete documentation                   │
+│  📄 SETUP_GUIDE.txt                Setup instructions (this file)           │
+│  📄 quick_start.py                 Copy-paste examples                      │
+│  📄 examples_standalone.py         More detailed examples                   │
+│  📄 migration_guide.py             Convert from server                      │
+│  📄 CHEATSHEET.txt                 This file!                               │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ TROUBLESHOOTING ──────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ❌ "Chrome not found"                                                      │
+│     → Install: sudo apt-get install chromium-browser                       │
+│                                                                              │
+│  ❌ "Timeout"                                                               │
+│     → Increase: flare = StandaloneFlare(timeout=180)                       │
+│                                                                              │
+│  ❌ "Permission denied"                                                     │
+│     → Make executable: chmod +x flaresolverr_standalone.py                 │
+│                                                                              │
+│  ❌ "Memory too high"                                                       │
+│     → Disable media: flare = StandaloneFlare(disable_media=True)           │
+│                                                                              │
+│  ❌ "No such file: urls.txt"                                                │
+│     → Run script once to create template, then edit it                     │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ METHODS ──────────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  fetch_url(url, timeout=None)                                               │
+│    → Fetch a single URL                                                    │
+│    → Returns: result dict                                                  │
+│                                                                              │
+│  fetch_from_file(filename, timeout=None)                                    │
+│    → Read URLs from file and fetch all                                     │
+│    → Returns: list of result dicts                                         │
+│                                                                              │
+│  save_results(output_file='results.json')                                   │
+│    → Save all results to JSON file                                         │
+│                                                                              │
+│  get_html(url_index=0)                                                      │
+│    → Get HTML from specific result                                         │
+│    → Returns: HTML string                                                  │
+│                                                                              │
+│  get_all_results()                                                          │
+│    → Get all results as list                                               │
+│    → Returns: list of result dicts                                         │
+│                                                                              │
+│  close()                                                                    │
+│    → Close browser and cleanup                                             │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ COMMON WORKFLOWS ─────────────────────────────────────────────────────────┐
+│                                                                              │
+│  🔄 Scrape websites with Cloudflare protection:                            │
+│     flare = StandaloneFlare(headless=True, disable_media=True)             │
+│     results = flare.fetch_from_file('urls.txt')                            │
+│     flare.save_results('data.json')                                        │
+│     flare.close()                                                          │
+│                                                                              │
+│  🔄 Extract cookies for authentication:                                    │
+│     result = flare.fetch_url('https://protected.com')                      │
+│     cookies = {c['name']: c['value'] for c in result['cookies']}           │
+│     # Use these cookies in other requests                                  │
+│                                                                              │
+│  🔄 Parse and extract data:                                                │
+│     soup = BeautifulSoup(result['html'], 'html.parser')                    │
+│     data = soup.find_all('div', class_='item')                             │
+│     # Process data...                                                      │
+│                                                                              │
+│  🔄 Monitor progress:                                                      │
+│     for i, url in enumerate(urls, 1):                                      │
+│         result = flare.fetch_url(url)                                      │
+│         status = "✓" if result['error'] is None else "✗"                   │
+│         print(f"[{i}/{len(urls)}] {status} {url}")                         │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PERFORMANCE TIPS ─────────────────────────────────────────────────────────┐
+│                                                                              │
+│  ⚡ Fastest:                                                                 │
+│     flare = StandaloneFlare(headless=True, disable_media=True)             │
+│     # No graphics, no images/CSS                                           │
+│                                                                              │
+│  ⚡ Balance speed & visibility:                                             │
+│     flare = StandaloneFlare(headless=False, disable_media=True)            │
+│     # See what's happening, but no heavy resources                         │
+│                                                                              │
+│  ⚡ Full details (slower):                                                  │
+│     flare = StandaloneFlare(headless=False, disable_media=False)           │
+│     # Useful for debugging                                                 │
+│                                                                              │
+└────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║  Ready to use! Start with:  python3 flaresolverr_standalone.py             ║
+║                                                                              ║
+║  For more help, see:  STANDALONE_README.md                                 ║
+║  For examples, see:   quick_start.py                                       ║
+╚════════════════════════════════════════════════════════════════════════════╝

@@ -1,0 +1,1946 @@
+{
+  "name": "My workflow design",
+  "nodes": [
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=node index-design.js {{$itemIndex}} \"{{ $('Basic LLM Chain').item.json.text }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2820,
+        -100
+      ],
+      "id": "7099acfa-e173-4ba5-998a-02ca3aa583f7",
+      "name": "Execute Command",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py-design.py html-design{{ $itemIndex }}.html \"{{ $('Basic LLM Chain').item.json.text.replaceAll(/[\\n„]/g, '')}}\" \"{{$json.stdout }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        2960,
+        -100
+      ],
+      "id": "9431bbc1-ea73-4713-86fd-5c7cf081f4a3",
+      "name": "Execute Command1",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3100,
+        -100
+      ],
+      "id": "f98c9153-6957-47a7-a315-9cd065e12458",
+      "name": "Edit Fields",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "8e57ae4a-e67a-4017-bef4-f58cce9fa03d",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "null",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "ef59a792-4f3e-447d-9453-a6eb814ca94b",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "loom.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "761ce673-ca8c-4cc2-8543-6e9da16bd506",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "=github",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "474d2aed-cd6b-44b2-ad1f-7fd763877a09",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "docs.google.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "e4a7a718-ba8f-4dfc-964b-d28fc75b4155",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "Linkedin",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "274fbecf-1701-4849-8670-4cfc30b25169",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "youtube",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "fc94b341-b17a-4ab6-ac5c-fba6baa0314b",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "instagram",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "63093eef-415e-40b9-b587-86ab96c12221",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "x.com",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "1538fa9f-ae89-440f-8242-26113c1fec17",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "facebook",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            },
+            {
+              "id": "64952e8e-b2a7-4c0a-bbee-3e4e61d2d0d2",
+              "leftValue": "={{ $('Basic LLM Chain').item.json.text }}",
+              "rightValue": "lnkd.in",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1400,
+        -900
+      ],
+      "id": "c55e67b5-77dc-4850-863e-8405430b104b",
+      "name": "If",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=  node index-design.js {{ $itemIndex }}0 {{ $('Edit Fields').all()[$itemIndex].json.relevant_links[0] }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3400,
+        -280
+      ],
+      "id": "c07f2ef8-b1f4-4f34-ae6d-863a35ea0cfb",
+      "name": "Execute Command6",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py-design.py html-design{{ $itemIndex }}0.html \"{{ $json.stdout }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3540,
+        -280
+      ],
+      "id": "9a09154d-4a55-45a8-9913-ef9a6fb77533",
+      "name": "Execute Command7",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3660,
+        -280
+      ],
+      "id": "465b025b-18bd-47bd-ad06-128ee75173db",
+      "name": "Edit Fields3",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=node index-design.js {{ $itemIndex }}1  {{ $('Edit Fields').item.json.relevant_links[1] }} "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        0
+      ],
+      "id": "63c69981-f20a-4cc1-8e2c-aec3de8c237f",
+      "name": "Execute Command8",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py-design.py html-design{{ $itemIndex }}1.html \"{{ $json.stdout }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3560,
+        0
+      ],
+      "id": "ae797d40-5fa1-4be8-8a08-b1e60e29f3d3",
+      "name": "Execute Command9",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3680,
+        0
+      ],
+      "id": "5aece4bc-b271-4fce-bcac-20a34dcdf8fe",
+      "name": "Edit Fields4",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py1-design.py {{ $json.emails }} {{ $('Edit Fields3').item.json.emails }} {{ $('Edit Fields').item.json.emails }} {{ $('Edit Fields4').item.json.emails }} {{ $('Edit Fields6').item.json.emails }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3940,
+        -160
+      ],
+      "id": "227adec6-408c-45e0-ac30-b6f8a327eb1b",
+      "name": "Execute Command10",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[1] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Saif Anees"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5060,
+        -120
+      ],
+      "id": "6b720034-6fc1-41ad-b39e-ca5cbe13c555",
+      "name": "Gmail2",
+      "webhookId": "3e7bb1c2-7fac-4218-a795-71a0ac4b530a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4rHbAJFN8VgM7GS",
+          "name": "Basil husban saif"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4120,
+        -160
+      ],
+      "id": "ac5ab89d-268c-4e1d-9cfb-7f7e1947c6a4",
+      "name": "Edit Fields5",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[0] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }} ",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Saif Anees"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        4940,
+        -320
+      ],
+      "id": "4b8a5e61-65aa-479e-9e7a-86a99fdbb761",
+      "name": "Gmail6",
+      "webhookId": "d05c2d08-b59c-4a42-873d-d79662bb9844",
+      "alwaysOutputData": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4rHbAJFN8VgM7GS",
+          "name": "Basil husban saif"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=node index-design.js {{ $itemIndex }}2  {{ $('Edit Fields').item.json.relevant_links[2] }} "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        180
+      ],
+      "id": "1970829b-2206-439f-b8a7-4c839a75c1ad",
+      "name": "Execute Command11",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py-design.py html-design{{ $itemIndex }}2.html \"{{ $json.stdout }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3560,
+        180
+      ],
+      "id": "a83b790a-d849-4434-8ce1-97134690cc4e",
+      "name": "Execute Command12",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3680,
+        180
+      ],
+      "id": "7e55af83-8974-4847-8fa0-3e625bcb5624",
+      "name": "Edit Fields6",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=node index-design.js {{ $itemIndex }}3  {{ $('Edit Fields').item.json.relevant_links[3] }} "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3420,
+        320
+      ],
+      "id": "780e08af-6d71-4bf7-aa14-a935e68f8e2b",
+      "name": "Execute Command13",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py-design.py html-design{{ $itemIndex }}3.html \"{{ $json.stdout }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3560,
+        320
+      ],
+      "id": "553aa549-b85d-4449-a6ae-f2a26fd6622b",
+      "name": "Execute Command14",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={{ $json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3680,
+        320
+      ],
+      "id": "86e7bb20-a2f2-4be6-bb66-6b4841eec117",
+      "name": "Edit Fields7",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -620,
+        -140
+      ],
+      "id": "51c1b414-7abf-4f99-93b6-c109c11ea165",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "50acdfad-9ce9-4ae3-8b6a-844dccf7f186",
+              "leftValue": "={{ $json.stdout }}",
+              "rightValue": "sorry",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": true
+        }
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        500,
+        -760
+      ],
+      "id": "9d076fad-31c8-4690-a8dc-9dbc08ad70ca",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $itemIndex*10 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4920,
+        -120
+      ],
+      "id": "f0bc9334-34d8-4398-95bf-2344010dcbd7",
+      "name": "Wait",
+      "webhookId": "9ce97c3c-ecbb-4930-be68-7793339327ef"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $itemIndex*10 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4940,
+        20
+      ],
+      "id": "832407af-bf23-484e-b307-7f41c5f813ea",
+      "name": "Wait1",
+      "webhookId": "ef3f9391-bb13-48c0-ab95-b983489139d3"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $itemIndex*10 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5060,
+        120
+      ],
+      "id": "08f60f64-622d-4fdf-a55f-b3046d3c9132",
+      "name": "Wait2",
+      "webhookId": "7d0f2569-1c8b-4425-ae73-d4616f547da1"
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5100,
+        240
+      ],
+      "id": "a76879d3-8e04-453e-b999-52099e0d3e6d",
+      "name": "Wait3",
+      "webhookId": "274e3e6a-44e5-4229-8fe8-8bce9326904a",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5160,
+        360
+      ],
+      "id": "1565c057-20e4-4f47-843c-40011383cca5",
+      "name": "Wait4",
+      "webhookId": "3e850f6a-d439-4fd6-a461-1bb6f1b03919",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5200,
+        540
+      ],
+      "id": "45b13d30-888c-454a-8636-fa239d094a1d",
+      "name": "Wait5",
+      "webhookId": "c3dd8743-02e7-4870-a719-e7f6267e909d",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5160,
+        700
+      ],
+      "id": "f59c45c4-59c8-4c86-b2b0-9013a8966186",
+      "name": "Wait6",
+      "webhookId": "e6cd34b0-adeb-46e4-8ccf-6fd231b1ae0a",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5180,
+        820
+      ],
+      "id": "10129511-c10b-4b88-a433-ef11dd15b362",
+      "name": "Wait7",
+      "webhookId": "6899ddb1-e75e-4fd9-b690-b161785d9759",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        5140,
+        1020
+      ],
+      "id": "f4c37728-d9bf-44bd-b92d-ac3ac008211d",
+      "name": "Wait8",
+      "webhookId": "8196fd83-da6e-4a5d-966b-10af464b4e1e",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} DESCRIPTION  \"{{ $('PowerShell2').item.json.stdout }}\" "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        680,
+        -220
+      ],
+      "id": "59a6bb9f-7741-4b52-be0e-31e577e6eb94",
+      "name": "Execute Command16",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} \"{{ $('Execute Command16').item.json.stdout }}\" URL \"{{ $('Basic LLM Chain').item.json.text.replace(/\"/g, '\\\\\"').replace(/\\n/g, ' ') }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1220,
+        -160
+      ],
+      "id": "3d24ddd1-952f-4e29-930e-8146ba154e4a",
+      "name": "Execute Command17",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} RELEVANT_LINKS {{ $json.relevant_links }}"
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3240,
+        -440
+      ],
+      "id": "155d0075-c4bd-41b2-b51b-10c3d096ac42",
+      "name": "Execute Command18",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} EMAILS \"{{ $json.emails }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        4300,
+        -200
+      ],
+      "id": "7f071eef-e9f7-4325-b768-255390cd7786",
+      "name": "Execute Command20",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} SOURCES \"{{ JSON.stringify($('Edit Fields').all()[$itemIndex].json.sources).replaceAll(/[\"“”„]/g, '`')}} }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        -460
+      ],
+      "id": "66e6a7f6-6eac-498b-ba0d-6b5bf72f91b2",
+      "name": "Execute Command19",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} COMMON_NAME_PART \"{{ $('Edit Fields').all()[$itemIndex].json.common_name_part }}\" "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3660,
+        -460
+      ],
+      "id": "fd5449d6-4ab6-498c-9271-ab8633f6faaf",
+      "name": "Execute Command23",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} DOMAIN_PARTS \"{{ $('Edit Fields').item.json.domain_parts }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        3860,
+        -460
+      ],
+      "id": "12e92f51-8cf2-47fd-a7d2-58a652df2716",
+      "name": "Execute Command24",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} MATCHING_LOGS \"{{ JSON.stringify($('Edit Fields').item.json.matching_logs).replace(/[\"“”\"$&]/g, ' ') }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        4060,
+        -460
+      ],
+      "id": "c2734c52-abee-444c-b438-e34245180408",
+      "name": "Execute Command25",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.0-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        880,
+        700
+      ],
+      "id": "9bdc5a07-9227-4e05-9787-9639ab180835",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "0kYePAmyJJj1z8tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[2] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Saif Anees"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5200,
+        0
+      ],
+      "id": "4e794c3e-7fd9-4e51-9d8d-029df22e1e34",
+      "name": "Gmail",
+      "webhookId": "f5007152-b0eb-4a48-bb40-69f0257eb640",
+      "alwaysOutputData": false,
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4rHbAJFN8VgM7GS",
+          "name": "Basil husban saif"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[3] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {
+          "appendAttribution": false,
+          "senderName": "Saif Anees"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5300,
+        120
+      ],
+      "id": "3fe446d3-a611-4a97-afef-8c8236e9d91e",
+      "name": "Gmail3",
+      "webhookId": "a9c614c5-e408-4d76-b17f-19ad4ef813c5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4rHbAJFN8VgM7GS",
+          "name": "Basil husban saif"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[5] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5400,
+        320
+      ],
+      "id": "74486a53-42e0-461d-9ab3-a51a988343fe",
+      "name": "Gmail4",
+      "webhookId": "e314c37e-dfb1-45a5-b37f-78d37cf058a1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[6] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5420,
+        520
+      ],
+      "id": "c74afa2f-268a-43f0-b9bb-e8e2324dfcb3",
+      "name": "Gmail5",
+      "webhookId": "3c75470a-35b6-4212-b407-a401949dfd7e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[7] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5420,
+        700
+      ],
+      "id": "2810a41c-282a-4b86-97ae-49989e54fbdd",
+      "name": "Gmail8",
+      "webhookId": "3578bdb8-a8d0-4db9-8e4b-3fd5438a956f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[4] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5420,
+        200
+      ],
+      "id": "ba906ede-4365-4d21-bbc9-ad1cebf3334e",
+      "name": "Gmail9",
+      "webhookId": "72adb5c7-8f47-4256-8657-5095f348c2d6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[8] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5400,
+        820
+      ],
+      "id": "c7eacb53-a8fe-4ad1-87cf-a24015a76433",
+      "name": "Gmail10",
+      "webhookId": "2b37b76a-20db-4108-a8cb-a0e337b4b89c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Edit Fields5').item.json.emails[9] }}",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }}",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        5380,
+        1000
+      ],
+      "id": "1ced6ecf-76cf-4e3c-aa70-e02d2a2ec563",
+      "name": "Gmail11",
+      "webhookId": "b164f50e-6ed1-43e0-a559-be9075ef1d8e",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VPBij3fVoD0tUKrE",
+          "name": "saifanees10"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('PowerShell2').item.json.stdout }}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "Please analyze the provided text and check for any website URL that may lead to the employer’s contact information, portfolio, personal website. Return only the URL with https:// if it is valid, and you believe contact info might be available on that site or if it’s the employer’s own website or the project site. Do not return URLs that are references or inspiration sources or github/google docs/someone's else website url. If no such URL exists, return 'null'. Do not include explanations unless you return 'null'. If 'null' is returned, please provide a detailed explanation directly after 'null', with no line breaks, explaining why no URL was chosen and why contact info cannot be found on each of the URLs.do not output in new line or break line anywhere(that formatting will be an error), output right after null like <nullexplain> return  url even if it includes the job poster's domain in the url, doesnt matter what it contains inside the website."
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        920,
+        -320
+      ],
+      "id": "642173c1-3e07-4bb8-b983-8721ad9c81f1",
+      "name": "Basic LLM Chain",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "sendTo": "=basilhusbansaif@gmail.com ",
+        "subject": "=I will {{ $('Basic LLM Chain3').item.json.text }} ",
+        "message": "={{ $('Execute Command21').item.json.stdout }}",
+        "options": {
+          "appendAttribution": false,
+          "bccList": "={{ $('Execute Command20').item.json.stdout }}",
+          "senderName": "Saif Anees"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        4940,
+        -480
+      ],
+      "id": "daa50bd1-45a1-49a0-a372-b53835ac13dd",
+      "name": "Gmail7",
+      "webhookId": "d05c2d08-b59c-4a42-873d-d79662bb9844",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "s4rHbAJFN8VgM7GS",
+          "name": "Basil husban saif"
+        }
+      },
+      "disabled": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://farazthewebguy.com/upwork/rss/0be134d89f6493a88d7418cb0f1238c1a60b7298d2d69bd2add03c9f3b82f0f6.xml",
+        "options": {
+          "ignoreSSL": true
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        -420,
+        -220
+      ],
+      "id": "06041c54-ff84-4d55-94ad-7deb411f292d",
+      "name": "RSS Read1",
+      "executeOnce": false,
+      "alwaysOutputData": false,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "amount": "={{ $itemIndex*10 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4720,
+        -440
+      ],
+      "id": "6a0724f6-8032-4ca2-ae26-450ba50dda46",
+      "name": "Wait9",
+      "webhookId": "9ce97c3c-ecbb-4930-be68-7793339327ef",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('PowerShell2').item.json.stdout }}\nthis is a job description on upwork, i want to apply there, make a 2-3 sentence paragraph just telling i will do whatever is mentioned, also how will i do it (non-technically very brief tell). keep it under 30 words"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        1640,
+        -120
+      ],
+      "id": "7e90f563-ad51-45e7-b91c-5c26832c391f",
+      "name": "Basic LLM Chain2",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        680
+      ],
+      "id": "a9e8e3bf-d8db-4bff-b1a7-9a9184925c39",
+      "name": "Google Gemini Chat Model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "0kYePAmyJJj1z8tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} APPLICATION \"{{ $('Basic LLM Chain2').item.json.text }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        -160
+      ],
+      "id": "435cbfea-051f-4b14-a293-1a32a3324617",
+      "name": "Execute Command22",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('PowerShell2').item.json.stdout }}\n\nthis is a job description on upwork, I WANT TO APPLY THERE, make a concise title that continues \"I saw your job gig listed on Upwork regarding how you wanted to <title>\" based on job description. only return title( dont include my statement) that i can add in my above statement and this statement \"I will not only <title> for you \". don't bold or anything and make the title short of one sentence only main subject, so the title should go with both statement naturally, 1st statement is employers want and 2nd is i will do this. i am the one and i will do it. i am the employee and i will do the employee work.if they want a employee i will not hire that employee i wil be the employee for them. they dont want employee. they want task done so title is about doing a task) so verb+title"
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        4220,
+        -580
+      ],
+      "id": "5b7682ad-735b-4d43-beef-37babb0f0d4d",
+      "name": "Basic LLM Chain3",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py3-design.py {{ $('Execute Command28').item.json.stdout }} {{ $('Execute Command16').item.json.stdout }} TITLE \"{{ $('Basic LLM Chain3').item.json.text }}\""
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        4540,
+        -560
+      ],
+      "id": "7ab07ab9-3839-414d-8537-444902eb8e8a",
+      "name": "Execute Command21",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4240,
+        -1100
+      ],
+      "id": "6a8670de-df98-465f-83d8-b6592e524d08",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "0kYePAmyJJj1z8tt",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "executeOnce": false,
+        "command": "=python py5.py {{ $('PowerShell').all()[$itemIndex].json.stdout }} {{ $('PowerShell1').all()[$itemIndex].json.stdout }} "
+      },
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        380,
+        -240
+      ],
+      "id": "16f45b89-886f-4cae-8481-11d862e6b62a",
+      "name": "Execute Command28",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "command": "=python py2.py \"{{ $('RSS Read1').item.json.content.replaceAll(/[\"“”„]/g, '/` ')}}\"\n",
+        "executeOnce": false
+      },
+      "type": "@starfallprojects/n8n-nodes-powershell.PowerShell",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -220
+      ],
+      "id": "ea9bf56f-10b2-4e68-9afe-9733ec7aba2b",
+      "name": "PowerShell",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "url": "https://farazthewebguy.com/upwork/rss/49cf7e112244808e4a04a5ecf49d2507c800b48d8fe39789bf19c444922097bf.xml",
+        "options": {
+          "ignoreSSL": true
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        -320,
+        20
+      ],
+      "id": "f7fc69da-aa8e-43a5-9b35-6aaac31902a8",
+      "name": "RSS Read",
+      "executeOnce": true,
+      "alwaysOutputData": false,
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "command": "=python py2-design.py \"{{ $('RSS Read').item.json.content.replaceAll(/[\"“””]/g, '\\` ')}}\"\n",
+        "executeOnce": false
+      },
+      "type": "@starfallprojects/n8n-nodes-powershell.PowerShell",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        20
+      ],
+      "id": "e836ccdf-d3f6-4acc-b669-58ada35bdfa5",
+      "name": "PowerShell1"
+    },
+    {
+      "parameters": {
+        "command": "=python py4.py {{ $('PowerShell').all()[$itemIndex].json.stdout }} \"{{ $('RSS Read1').all()[$itemIndex].json.contentSnippet.replace(/[\"“”$&]/g, ' ')\n.replace(/\\n/g, ' ').replace(/\\\\/g, '\\\\\\\\') }}\" {{ $('PowerShell1').all()[$itemIndex].json.stdout }} \"{{ $('RSS Read').all()[$itemIndex].json.content.replace(/[\"“”$&]/g, ' ').replace(/\\n/g, ' ').replace(/\\\\/g, '\\\\\\\\') }}\"",
+        "executeOnce": false
+      },
+      "type": "@starfallprojects/n8n-nodes-powershell.PowerShell",
+      "typeVersion": 1,
+      "position": [
+        220,
+        -160
+      ],
+      "id": "3d3e5495-2278-4254-a698-05acfce5430b",
+      "name": "PowerShell2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        20,
+        -100
+      ],
+      "id": "910ece78-507d-49fc-89f5-53da91d0cb29",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "amount": "={{ $itemIndex*10 }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4720,
+        -300
+      ],
+      "id": "21f283a3-6372-412a-991c-4240f4fd6257",
+      "name": "Wait10",
+      "webhookId": "9ce97c3c-ecbb-4930-be68-7793339327ef"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Command": {
+      "main": [
+        [
+          {
+            "node": "Execute Command1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Execute Command18",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Execute Command6": {
+      "main": [
+        [
+          {
+            "node": "Execute Command7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command8": {
+      "main": [
+        [
+          {
+            "node": "Execute Command9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Execute Command8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Execute Command11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command10": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Execute Command20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command11": {
+      "main": [
+        [
+          {
+            "node": "Execute Command12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command12": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command13": {
+      "main": [
+        [
+          {
+            "node": "Execute Command14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command14": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Execute Command13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Execute Command10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Execute Command16",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Gmail3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Gmail9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "Gmail4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "Gmail5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "Gmail8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait7": {
+      "main": [
+        [
+          {
+            "node": "Gmail10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait8": {
+      "main": [
+        [
+          {
+            "node": "Gmail11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command16": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command17": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command18": {
+      "main": [
+        [
+          {
+            "node": "Execute Command19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command20": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command19": {
+      "main": [
+        [
+          {
+            "node": "Execute Command23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command23": {
+      "main": [
+        [
+          {
+            "node": "Execute Command24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command24": {
+      "main": [
+        [
+          {
+            "node": "Execute Command25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command25": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Execute Command17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read1": {
+      "main": [
+        [
+          {
+            "node": "PowerShell",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait9": {
+      "main": [
+        [
+          {
+            "node": "Gmail7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        [
+          {
+            "node": "Execute Command22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command22": {
+      "main": [
+        [
+          {
+            "node": "Execute Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        [
+          {
+            "node": "Execute Command21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command21": {
+      "main": [
+        [
+          {
+            "node": "Execute Command6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Command28": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PowerShell": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "PowerShell1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PowerShell1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "PowerShell2": {
+      "main": [
+        [
+          {
+            "node": "Execute Command28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "PowerShell2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait10": {
+      "main": [
+        [
+          {
+            "node": "Gmail6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "executionTimeout": 3600,
+    "saveExecutionProgress": true
+  },
+  "versionId": "dc8b60e0-ded2-462b-a040-43808dd8238f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "83afd9931b3ee01a39bf46557eab2ee08de5118f3478398224397a0b1aef02f6"
+  },
+  "id": "h43DzeuLgtUkYKa4",
+  "tags": []
+}
