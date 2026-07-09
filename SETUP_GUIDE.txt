@@ -1,0 +1,315 @@
+# Standalone FlareSolverr - Summary
+
+## What You Get
+
+I've created a **standalone Python implementation** of FlareSolverr that:
+
+✅ **Requires NO server** - No localhost, no ports, no sessions management  
+✅ **Single Python file** - `flaresolverr_standalone.py` contains everything  
+✅ **Easy to use** - Read URLs from file, get results in variables  
+✅ **Cloudflare bypass** - Automatically detects and solves challenges  
+✅ **Data storage** - Results stay in memory or save to JSON  
+✅ **Direct Python** - Import and use in your code  
+
+## Files Created
+
+```
+📄 flaresolverr_standalone.py     ← Main script (use this!)
+📄 requirements_standalone.txt    ← Dependencies
+📄 STANDALONE_README.md          ← Full documentation
+📄 quick_start.py                ← Copy-paste examples
+📄 examples_standalone.py        ← More detailed examples
+📄 migration_guide.py            ← Convert from server version
+📄 SETUP_GUIDE.txt               ← This file
+```
+
+## Quick Setup (3 Steps)
+
+### Step 1: Install Dependencies
+```bash
+pip install -r requirements_standalone.txt
+```
+
+Or manually:
+```bash
+pip install selenium==4.39.0 undetected-chromedriver==3.5.4 certifi==2025.11.12
+```
+
+### Step 2: Install Chrome/Chromium
+- **Ubuntu/Debian:** `sudo apt-get install chromium-browser`
+- **macOS:** `brew install chromium`
+- **Windows:** Download from https://www.google.com/chrome/
+
+### Step 3: Create URLs file (urls.txt)
+```
+https://example.com
+https://httpbin.org/html
+https://another-site.com
+```
+
+## Usage (Pick Your Method)
+
+### Method 1: Run the Script Directly
+```bash
+python3 flaresolverr_standalone.py
+```
+This reads `urls.txt` and saves results to `results.json`
+
+### Method 2: Use in Python Code
+```python
+from flaresolverr_standalone import StandaloneFlare
+
+flare = StandaloneFlare(headless=True)
+result = flare.fetch_url('https://example.com')
+
+print(result['html'])      # Page content
+print(result['status'])    # HTTP status
+print(result['cookies'])   # Extracted cookies
+print(result['error'])     # Any errors
+
+flare.close()
+```
+
+### Method 3: Batch Processing
+```python
+from flaresolverr_standalone import StandaloneFlare
+
+flare = StandaloneFlare(headless=True, disable_media=True)
+results = flare.fetch_from_file('urls.txt')
+flare.save_results('output.json')
+
+for result in results:
+    print(f"{result['url']}: {result['status']}")
+
+flare.close()
+```
+
+## What Each File Does
+
+### flaresolverr_standalone.py
+**The main script.** Contains:
+- `StandaloneFlare` class with all functionality
+- Cloudflare challenge detection and bypass
+- Browser automation with Selenium
+- HTML parsing and cookie extraction
+- Result saving to JSON
+- Built-in `main()` for direct execution
+
+### requirements_standalone.txt
+**Install dependencies** with:
+```bash
+pip install -r requirements_standalone.txt
+```
+
+Includes:
+- `selenium` - WebDriver automation
+- `undetected-chromedriver` - Bypass detection
+- `certifi` - SSL certificates
+- `requests`, `websockets`, `packaging` - Support libraries
+
+### STANDALONE_README.md
+**Complete documentation** with:
+- Feature list
+- Installation instructions
+- Usage examples (5+ different approaches)
+- API reference
+- Data structure details
+- Troubleshooting
+- Performance tips
+
+### quick_start.py
+**Copy-paste ready examples:**
+1. Fetch single URL
+2. Fetch from file
+3. Access data in variables
+4. Process multiple URLs
+5. Parse HTML and extract data
+6. Error handling with retries
+7. Export in different formats
+8. Monitor progress
+
+### examples_standalone.py
+**More detailed examples:**
+- Single URL fetching
+- File-based batch processing
+- Direct data access
+- Custom configuration
+- Cookie extraction
+
+### migration_guide.py
+**If you were using the server version:**
+- Side-by-side comparison
+- Convert old code to new
+- Benefits of standalone
+- Complete web scraper example
+
+## Result Structure
+
+Each fetch returns a dictionary:
+
+```python
+{
+    'url': 'https://example.com',           # The URL fetched
+    'status': 200,                          # HTTP status code
+    'html': '<html>...</html>',             # Full page HTML
+    'cookies': [                            # List of cookies
+        {
+            'name': 'sessionid',
+            'value': 'abc123...',
+            'domain': '.example.com',
+            'path': '/',
+            'expires': 1735689600,
+            'httpOnly': True,
+            'secure': True,
+            'sameSite': 'Lax'
+        }
+    ],
+    'user_agent': 'Mozilla/5.0...',         # Browser user agent used
+    'error': None,                          # None if successful, else error message
+    'timestamp': 1672531200.123             # When it was fetched
+}
+```
+
+## Common Use Cases
+
+### Web Scraping
+```python
+from flaresolverr_standalone import StandaloneFlare
+from bs4 import BeautifulSoup
+
+flare = StandaloneFlare(headless=True, disable_media=True)
+result = flare.fetch_url('https://target-site.com')
+
+if result['error'] is None:
+    soup = BeautifulSoup(result['html'], 'html.parser')
+    # Extract data...
+
+flare.close()
+```
+
+### Extract Cookies for Authentication
+```python
+flare = StandaloneFlare()
+result = flare.fetch_url('https://site-with-protection.com')
+
+cookies = {c['name']: c['value'] for c in result['cookies']}
+# Use these cookies in subsequent requests
+```
+
+### Batch Processing with Progress
+```python
+flare = StandaloneFlare()
+results = flare.fetch_from_file('urls.txt')
+
+success = sum(1 for r in results if r['error'] is None)
+print(f"Success: {success}/{len(results)}")
+```
+
+### Save HTML Files
+```python
+flare = StandaloneFlare()
+results = flare.fetch_from_file('urls.txt')
+
+for i, result in enumerate(results):
+    if result['error'] is None:
+        with open(f'page_{i}.html', 'w') as f:
+            f.write(result['html'])
+
+flare.close()
+```
+
+## Troubleshooting
+
+### "Chrome not found"
+Install Chrome/Chromium:
+- Ubuntu/Debian: `sudo apt-get install chromium-browser`
+- macOS: `brew install chromium`
+- Windows: Download from Google Chrome website
+
+### "Connection refused" or "timeout"
+Increase timeout:
+```python
+flare = StandaloneFlare(timeout=180)  # 3 minutes instead of 60 seconds
+```
+
+### "Permission denied" on script
+Make it executable:
+```bash
+chmod +x flaresolverr_standalone.py
+```
+
+### Memory usage too high
+Disable media:
+```python
+flare = StandaloneFlare(disable_media=True)  # No images/CSS = faster
+```
+
+## Performance Tips
+
+1. **Headless mode is MUCH faster:**
+   ```python
+   flare = StandaloneFlare(headless=True)  # Default - no visual
+   ```
+
+2. **Disable media blocks resources:**
+   ```python
+   flare = StandaloneFlare(disable_media=True)
+   ```
+
+3. **Batch process files:**
+   ```python
+   results = flare.fetch_from_file('urls.txt')  # Auto-batching with delays
+   ```
+
+4. **Close browser when done:**
+   ```python
+   flare.close()  # Frees up memory
+   ```
+
+## Key Differences from Server Version
+
+| Aspect | Server | Standalone |
+|--------|--------|-----------|
+| Setup | More complex | Very simple |
+| Running | Must run separately | Runs in your script |
+| API | HTTP REST | Direct Python |
+| Latency | Network overhead | Direct execution |
+| Sessions | Persistent | Per-request |
+| Integration | Via HTTP calls | Direct import |
+| Use case | Shared service | Scripting/automation |
+
+## Next Steps
+
+1. **Install:** `pip install -r requirements_standalone.txt`
+2. **Setup URLs:** Create `urls.txt` with your URLs
+3. **Run:** `python3 flaresolverr_standalone.py`
+4. **Check results:** Open `results.json`
+
+Or jump straight to code:
+```python
+from flaresolverr_standalone import StandaloneFlare
+
+flare = StandaloneFlare()
+result = flare.fetch_url('https://example.com')
+print(result['html'][:200])  # First 200 chars of HTML
+flare.close()
+```
+
+## Support & Resources
+
+- **Documentation:** See `STANDALONE_README.md`
+- **Examples:** See `quick_start.py` and `examples_standalone.py`
+- **Migration:** See `migration_guide.py` if converting from server
+- **Original FlareSolverr:** https://github.com/FlareSolverr/FlareSolverr
+
+## License
+
+Based on FlareSolverr (MIT License)
+https://github.com/FlareSolverr/FlareSolverr
+
+---
+
+**Ready to use! Start with:**
+```bash
+python3 flaresolverr_standalone.py
+```

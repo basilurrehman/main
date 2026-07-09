@@ -1,6 +1,13 @@
 import sys
 import os
+<<<<<<< HEAD
 import msvcrt  # Windows file locking
+=======
+# if os.name == 'nt':  # Windows
+#     import msvcrt
+# else:  # Linux/macOS (including GitHub Codespaces)
+import fcntl
+>>>>>>> origin/new
 import time
 import traceback
 from bs4 import BeautifulSoup
@@ -108,7 +115,12 @@ def acquire_file_lock(file_path, max_wait_time=120):
     while time.time() - start_time < max_wait_time:
         try:
             file_handle = open(file_path, "r+b")  # Open for read and write in binary mode
+<<<<<<< HEAD
             msvcrt.locking(file_handle.fileno(), msvcrt.LK_NBLCK, 1)  # Try to lock the first byte
+=======
+            # msvcrt.locking(file_handle.fileno(), msvcrt.LK_NBLCK, 1)  # Try to lock the first byte
+            fcntl.flock(file_handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+>>>>>>> origin/new
             return file_handle
         except IOError:  # Lock could not be acquired
             print(f"File {file_path} is locked by another process. Waiting 10 seconds...")
@@ -122,7 +134,12 @@ def release_file_lock(file_handle):
     """Releases the lock on the file."""
     if file_handle:
         try:
+<<<<<<< HEAD
             msvcrt.locking(file_handle.fileno(), msvcrt.LK_UNLCK, 1)  # Unlock
+=======
+            # msvcrt.locking(file_handle.fileno(), msvcrt.LK_UNLCK, 1)  # Unlock
+            fcntl.flock(file_handle.fileno(), fcntl.LOCK_UN)
+>>>>>>> origin/new
             file_handle.close()
         except Exception as e:
             print(f"Error releasing file lock: {e}")

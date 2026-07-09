@@ -1,0 +1,395 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║        STANDALONE FLARESOLVERR - Complete Package Documentation           ║
+║                                                                            ║
+║  No server. No localhost. No sessions. Just Python. All in one file.      ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+📦 WHAT YOU GOT
+═══════════════════════════════════════════════════════════════════════════
+
+A complete, standalone implementation of FlareSolverr that:
+
+  ✓ Runs without a server (no localhost, no ports)
+  ✓ Takes URLs from a file or your code
+  ✓ Opens a browser, solves Cloudflare challenges
+  ✓ Saves data in variables and/or JSON
+  ✓ Closes browser automatically
+  ✓ Single Python file with full documentation
+
+
+📁 FILES IN THIS PACKAGE
+═══════════════════════════════════════════════════════════════════════════
+
+START HERE (Pick one):
+─────────────────────────────────────────────────────────────────────────
+1. 📄 CHEATSHEET.txt               ← Quick reference (1 page)
+2. 📄 SETUP_GUIDE.txt              ← Setup instructions & overview
+3. 📄 STANDALONE_README.md         ← Complete documentation
+
+THEN USE:
+─────────────────────────────────────────────────────────────────────────
+4. 📄 flaresolverr_standalone.py   ← THE MAIN SCRIPT (use this!)
+5. 📄 requirements_standalone.txt  ← Install dependencies
+
+LEARN:
+─────────────────────────────────────────────────────────────────────────
+6. 📄 quick_start.py               ← Copy-paste examples (8 different ways)
+7. 📄 examples_standalone.py       ← More detailed examples
+8. 📄 migration_guide.py           ← If converting from server
+
+THIS FILE:
+─────────────────────────────────────────────────────────────────────────
+9. 📄 INDEX.txt                    ← You are here!
+
+
+🚀 QUICK START (3 MINUTES)
+═══════════════════════════════════════════════════════════════════════════
+
+1. Install:
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ pip install -r requirements_standalone.txt                          │
+   │ # Also install Chrome: sudo apt-get install chromium-browser       │
+   └─────────────────────────────────────────────────────────────────────┘
+
+2. Create urls.txt:
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ https://example.com                                                 │
+   │ https://httpbin.org/html                                            │
+   │ https://another-site.com                                            │
+   └─────────────────────────────────────────────────────────────────────┘
+
+3. Run:
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ python3 flaresolverr_standalone.py                                  │
+   │ # Results saved to results.json                                     │
+   └─────────────────────────────────────────────────────────────────────┘
+
+Done! Check results.json
+
+
+💡 COMMON USAGE PATTERNS
+═══════════════════════════════════════════════════════════════════════════
+
+PATTERN 1: Single URL
+──────────────────────────────────────────────────────────────────────────
+from flaresolverr_standalone import StandaloneFlare
+
+flare = StandaloneFlare(headless=True)
+result = flare.fetch_url('https://example.com')
+
+html = result['html']
+status = result['status']
+cookies = result['cookies']
+
+flare.close()
+
+
+PATTERN 2: Multiple URLs from File
+──────────────────────────────────────────────────────────────────────────
+from flaresolverr_standalone import StandaloneFlare
+
+flare = StandaloneFlare(headless=True, disable_media=True)
+results = flare.fetch_from_file('urls.txt')
+flare.save_results('output.json')
+
+for result in results:
+    print(f"{result['url']}: {result['status']}")
+
+flare.close()
+
+
+PATTERN 3: Web Scraping
+──────────────────────────────────────────────────────────────────────────
+from flaresolverr_standalone import StandaloneFlare
+from bs4 import BeautifulSoup
+
+flare = StandaloneFlare()
+result = flare.fetch_url('https://example.com')
+
+if result['error'] is None:
+    soup = BeautifulSoup(result['html'], 'html.parser')
+    title = soup.title.string
+    links = [a.get('href') for a in soup.find_all('a')]
+
+flare.close()
+
+
+PATTERN 4: Error Handling
+──────────────────────────────────────────────────────────────────────────
+flare = StandaloneFlare(timeout=120)
+result = flare.fetch_url('https://example.com')
+
+if result['error'] is None:
+    print("Success!")
+    print(f"Got {len(result['html'])} bytes")
+else:
+    print(f"Failed: {result['error']}")
+
+flare.close()
+
+
+📚 WHICH FILE TO READ WHEN?
+═══════════════════════════════════════════════════════════════════════════
+
+I want to...                          Read this file
+────────────────────────────────────────────────────────────────────────────
+Get started in 1 minute              → CHEATSHEET.txt
+Understand the setup                 → SETUP_GUIDE.txt
+Read full documentation              → STANDALONE_README.md
+See copy-paste code examples         → quick_start.py
+Learn detailed examples              → examples_standalone.py
+Convert from server version          → migration_guide.py
+Run the script                       → flaresolverr_standalone.py
+See file structure                   → This file (INDEX.txt)
+
+
+🔧 INSTALLATION DETAILS
+═══════════════════════════════════════════════════════════════════════════
+
+Prerequisites:
+  • Python 3.9 or higher
+  • Chrome or Chromium browser
+
+Install dependencies:
+  $ pip install -r requirements_standalone.txt
+
+Packages installed:
+  • selenium==4.39.0              (WebDriver automation)
+  • undetected-chromedriver==3.5.4 (Bypass detection)
+  • certifi==2025.11.12            (SSL certificates)
+  • requests==2.32.5               (HTTP library)
+  • websockets==15.0.1             (WebSocket support)
+  • packaging==25.0                (Package utilities)
+
+Install Chrome/Chromium:
+  Ubuntu/Debian:  sudo apt-get install chromium-browser
+  macOS:          brew install chromium
+  Windows:        Download from https://www.google.com/chrome/
+
+
+🎯 MAIN API
+═══════════════════════════════════════════════════════════════════════════
+
+Constructor:
+──────────────────────────────────────────────────────────────────────────
+StandaloneFlare(
+    headless=True,        # Hide browser (default: True)
+    disable_media=False,  # Block images/CSS (default: False)
+    timeout=60            # Seconds per URL (default: 60)
+)
+
+
+Methods:
+──────────────────────────────────────────────────────────────────────────
+flare.fetch_url(url, timeout=None)
+  → Fetch a single URL
+  → Returns: dict with 'url', 'status', 'html', 'cookies', etc.
+
+flare.fetch_from_file(filename, timeout=None)
+  → Read URLs from file and fetch each one
+  → Returns: list of result dicts
+
+flare.save_results(output_file='results.json')
+  → Save all results to JSON file
+
+flare.get_html(url_index=0)
+  → Get HTML content from specific result
+  → Returns: HTML string
+
+flare.get_all_results()
+  → Get all results as a list
+  → Returns: list of result dicts
+
+flare.close()
+  → Close browser and cleanup
+
+
+Result dictionary structure:
+──────────────────────────────────────────────────────────────────────────
+{
+    'url': 'https://example.com',           # URL fetched
+    'status': 200,                          # HTTP status
+    'html': '<html>...</html>',             # Full page HTML
+    'cookies': [                            # List of cookies
+        {
+            'name': 'sessionid',
+            'value': 'abc123',
+            'domain': '.example.com',
+            'path': '/',
+            'expires': 1735689600,
+            'httpOnly': True,
+            'secure': True,
+            'sameSite': 'Lax'
+        }
+    ],
+    'user_agent': 'Mozilla/5.0...',         # Browser user agent
+    'error': None,                          # None if successful
+    'timestamp': 1672531200.123             # When fetched
+}
+
+
+⚡ PERFORMANCE MODES
+═══════════════════════════════════════════════════════════════════════════
+
+FASTEST (Web scraping):
+  flare = StandaloneFlare(headless=True, disable_media=True)
+  • No graphics
+  • No images/CSS/fonts
+  • Fastest execution
+  • Lowest memory
+
+BALANCED (Debugging while fast):
+  flare = StandaloneFlare(headless=False, disable_media=True)
+  • See what's happening
+  • Still no heavy resources
+  • Good for debugging
+
+COMPLETE (All resources):
+  flare = StandaloneFlare(headless=False, disable_media=False)
+  • Fully rendered page
+  • All resources loaded
+  • Slowest execution
+  • Useful for visual debugging
+
+
+🐛 COMMON ISSUES & SOLUTIONS
+═══════════════════════════════════════════════════════════════════════════
+
+Error: "Chrome not found"
+─────────────────────────────────────────────────────────────────────────
+Solution: Install Chrome/Chromium
+  Ubuntu/Debian: sudo apt-get install chromium-browser
+  macOS: brew install chromium
+  Windows: Download from Google Chrome website
+
+
+Error: "Timeout"
+─────────────────────────────────────────────────────────────────────────
+Solution: Increase timeout for slow sites
+  flare = StandaloneFlare(timeout=180)  # 3 minutes instead of 60 seconds
+
+
+Error: "Permission denied"
+─────────────────────────────────────────────────────────────────────────
+Solution: Make script executable
+  chmod +x flaresolverr_standalone.py
+
+
+Error: "Memory usage too high"
+─────────────────────────────────────────────────────────────────────────
+Solution: Disable media loading
+  flare = StandaloneFlare(disable_media=True)
+
+
+Error: "Module not found"
+─────────────────────────────────────────────────────────────────────────
+Solution: Install dependencies
+  pip install -r requirements_standalone.txt
+
+
+📊 COMPARISON
+═══════════════════════════════════════════════════════════════════════════
+
+Feature                   Server              Standalone
+─────────────────────────────────────────────────────────────────────────
+Setup Complexity         Medium              Simple ✓
+Running Method           Separate process    In your script ✓
+API Type                 HTTP REST           Direct Python ✓
+Network Overhead         Yes                 No ✓
+Persistent Sessions      Yes                 No
+Integration Difficulty   Requires HTTP       Native Python ✓
+Single Script            No                  Yes ✓
+Memory Footprint         Larger              Smaller ✓
+Use Case                 Shared service      Scripting ✓
+
+
+✅ WHAT WORKS
+═══════════════════════════════════════════════════════════════════════════
+
+✓ Cloudflare challenges         (automatic detection and solving)
+✓ Turnstile verification        (captcha bypassing)
+✓ DDoS-Guard protection         (challenge detection)
+✓ Multiple simultaneous URLs    (batch processing)
+✓ Cookie extraction             (automatic collection)
+✓ User-Agent detection          (browser identification)
+✓ Media blocking                (images, CSS, fonts)
+✓ Headless mode                 (no visual browser)
+✓ Custom timeouts               (per request tuning)
+✓ HTML parsing                  (with BeautifulSoup)
+✓ JSON export                   (results saving)
+✓ Error handling                (with detailed messages)
+
+
+❌ WHAT DOESN'T WORK (vs Server)
+═══════════════════════════════════════════════════════════════════════════
+
+✗ Persistent sessions           (by design - each request independent)
+✗ Multiple client support       (single process only)
+✗ Proxy rotation               (single proxy per request)
+✗ HTTP API                     (direct Python only)
+✗ Load balancing               (single instance)
+✗ Docker deployment            (not containerized)
+
+
+📝 FILE FORMAT EXAMPLES
+═══════════════════════════════════════════════════════════════════════════
+
+urls.txt (for fetch_from_file):
+──────────────────────────────────────────────────────────────────────────
+# Comments start with #
+https://example.com
+https://httpbin.org/html
+
+# Blank lines are ignored
+https://another-site.com
+
+# URLs don't need protocol
+example.com  # Will become https://example.com
+
+
+results.json (output):
+──────────────────────────────────────────────────────────────────────────
+[
+  {
+    "url": "https://example.com",
+    "status": 200,
+    "user_agent": "Mozilla/5.0...",
+    "cookies_count": 3,
+    "cookies": [...],
+    "error": null,
+    "timestamp": 1672531200.123,
+    "html_length": 12345
+  },
+  ...
+]
+
+
+🔗 RELATED RESOURCES
+═══════════════════════════════════════════════════════════════════════════
+
+Original FlareSolverr Project:
+  https://github.com/FlareSolverr/FlareSolverr
+
+BeautifulSoup Documentation (for HTML parsing):
+  https://www.crummy.com/software/BeautifulSoup/
+
+Selenium Documentation:
+  https://selenium.dev/
+
+undetected-chromedriver:
+  https://github.com/ultrafunkamsterdam/undetected-chromedriver
+
+
+📞 SUPPORT
+═══════════════════════════════════════════════════════════════════════════
+
+1. Check CHEATSHEET.txt for quick answers
+2. See STANDALONE_README.md for detailed docs
+3. Look at quick_start.py for code examples
+4. Check migration_guide.py if converting from server
+5. Review FlareSolverr GitHub for Cloudflare-specific issues
+
+
+╔══════════════════════════════════════════════════════════════════════════╗
+║  NEXT STEP: Read CHEATSHEET.txt or SETUP_GUIDE.txt to get started       ║
+╚══════════════════════════════════════════════════════════════════════════╝

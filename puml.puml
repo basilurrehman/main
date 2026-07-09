@@ -1,0 +1,75 @@
+@startuml LogisticsManagementSystem
+class Person {
+    - name : String
+    - phoneNumber : String
+    + Person(name : String, phoneNumber : String)
+    + getName() : String
+    + getPhoneNumber() : String
+}
+
+class Sender {
+    - address : String
+    + Sender(name : String, phoneNumber : String, address : String)
+    + getAddress() : String
+}
+Sender --|> Person
+
+class DeliveryWorker {
+    - deliveriesCompleted : int
+    - payPerDelivery : double
+    + DeliveryWorker(name : String, phoneNumber : String, payPerDelivery : double)
+    + completeDelivery() : void
+    + getDeliveriesCompleted() : int
+    + calculatePay() : double
+}
+DeliveryWorker --|> Person
+
+class Vehicle {
+    - type : String
+    - registrationNumber : String
+    + Vehicle(type : String, registrationNumber : String)
+    + getType() : String
+    + getRegistrationNumber() : String
+}
+
+class Route {
+    - startLocation : String
+    - endLocation : String
+    + Route(startLocation : String, endLocation : String)
+    + getStartLocation() : String
+    + getEndLocation() : String
+}
+
+class Package {
+    - content : String
+    - sender : Sender
+    - delivery : Delivery
+    + Package(content : String, sender : Sender)
+    + setDelivery(delivery : Delivery) : void
+    + getContent() : String
+    + getSender() : Sender
+    + getDelivery() : Delivery
+}
+
+class Delivery {
+    - worker : DeliveryWorker
+    - vehicle : Vehicle
+    - route : Route
+    - isComplete : boolean
+    + Delivery(worker : DeliveryWorker, vehicle : Vehicle, route : Route)
+    + completeDelivery() : void
+    + isComplete() : boolean
+    + getWorker() : DeliveryWorker
+    + getVehicle() : Vehicle
+    + getRoute() : Route
+}
+
+LogisticsManagementSystem : +main(args : String[]) : void
+
+Package --> Sender
+Package --> Delivery
+Delivery --> DeliveryWorker
+Delivery --> Vehicle
+Delivery --> Route
+
+@enduml

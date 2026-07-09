@@ -10,7 +10,11 @@ async function run() {
         async function launchBrowser() {
             return await puppeteer.launch({
                 headless: true,
+<<<<<<< HEAD
                 executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+=======
+                executablePath: '/usr/bin/google-chrome-stable', // Update with correct path
+>>>>>>> origin/new
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',

@@ -1,0 +1,4 @@
+Basil,113,Cs,bscs,2024,4.0
+Khalid kashmiri,100,cats course,cats department,2025,1.0
+Muhammad sumbul,404,QT,qties department,2020,2.0
+Copilot,101,AI,Art Int,2022,3.9

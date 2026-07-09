@@ -1,0 +1,31 @@
+digraph EventManagementSystem {
+	Person [label="Person
+- name
+- email
+- contactNumber"]
+	Organizer [label="Organizer
+- organizerID
+- organizationName"]
+	Attendee [label="Attendee
+- attendeeID
+- ticketType"]
+	Event [label="Event
+- eventName
+- date
+- venue
+- attendees[]"]
+	Venue [label="Venue
+- venueName
+- location
+- capacity"]
+	EventSchedule [label="EventSchedule
+- scheduleDate
+- event
+- organizer"]
+	Person -> Organizer [arrowhead=empty]
+	Person -> Attendee [arrowhead=empty]
+	Event -> Attendee [label=contains arrowhead=odiamond]
+	Event -> Venue [label=has arrowhead=diamond]
+	EventSchedule -> Event [label=associates arrowhead=none]
+	EventSchedule -> Organizer [label=associates arrowhead=none]
+}
